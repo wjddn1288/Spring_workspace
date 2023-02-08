@@ -1,0 +1,9 @@
+1675836998072	Delete element
+1675838877478	Rename package 'domain'
+1675838882391	Rename package 'exception'
+1675838886989	Rename package 'model'
+1675838890657	Rename package 'model.board'
+1675838898440	Rename package 'model.emp'
+1675838902468	Rename package 'mybatis'
+1675840587752	Rename type 'BoardController'
+1675840677671	Rename type 'EmpService'
