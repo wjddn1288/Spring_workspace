@@ -4,15 +4,18 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee https://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
 
 	<!-- The definition of the Root Spring Container shared by all Servlets and Filters -->
-	<context-param>
-		<param-name>contextConfigLocation</param-name>
-		<param-value>/WEB-INF/spring/root-context.xml</param-value>
-	</context-param>
+	<!-- 어플리케이선 내장객체 전달할 초기화 파라미터 -->
+			<context-param>
+				<param-name>contextConfigLocation</param-name>
+				<param-value>/WEB-INF/root-context.xml</param-value>
+			</context-param>
 	
 	<!-- Creates the Spring Container shared by all Servlets and Filters -->
+	 <!-- 서버 가동 및 중지 이벤트를 처리하는 리스너 -->
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-	</listener>
+		<!-- <listener-class>com.edu.mvc2.listener.ContextLoaderListener</listener-class>우리꺼! -->
+	</listener> 
 
 	<!-- 클라이언트의 요청이 들어올때 지금까지는 서블릿이 제일먼저 해당 요청을 처리하는 것 처럼 보였지만, 
 			사실 서블릿이 요청을 받기도 전에 먼저 관리할수 있는 객체가 지원되는데, 이 객체를 가리켜 필터라 한다 -->
@@ -67,6 +70,22 @@
 		
 	<servlet-mapping>
 		<servlet-name>dispatcher</servlet-name>
-		<url-pattern>/</url-pattern>
+		<url-pattern>/client/*</url-pattern>
+	</servlet-mapping>
+	
+	<!-- 관리자모드와 관련된 모든 요청을 처리하는 서블릿 매핑-->
+		<servlet>
+		<servlet-name>adminServlet</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+			<init-param>
+				<param-name>contextConfigLocation</param-name>
+				<param-value>WEB-INF/admin-config.xml</param-value>
+			</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+		
+	<servlet-mapping>
+		<servlet-name>adminServlet</servlet-name>
+		<url-pattern>/admin/*</url-pattern>
 	</servlet-mapping>
 </web-app>
