@@ -16,7 +16,8 @@
 	</insert>
 	
 	<update id="update" parameterType="Gallery">
-		update gallery set title=#{title}, writer=#{writer}, content=#{content}, filename=#{filename}
+		update gallery set title=#{title}, writer=#{writer}
+		, content=#{content} , filename=#{filename}
 		where gallery_idx=#{gallery_idx}
 	</update>
 	

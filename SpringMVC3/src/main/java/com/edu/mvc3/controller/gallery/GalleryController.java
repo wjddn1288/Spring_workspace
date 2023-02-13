@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.edu.mvc3.domain.Gallery;
 import com.edu.mvc3.exception.UploadException;
+import com.edu.mvc3.model.GalleryService;
 import com.edu.mvc3.model.util.FileManager;
 
 import lombok.Setter;

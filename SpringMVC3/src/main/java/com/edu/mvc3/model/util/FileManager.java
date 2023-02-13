@@ -3,28 +3,27 @@ package com.edu.mvc3.model.util;
 import java.io.File;
 import java.io.IOException;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.edu.mvc3.domain.Gallery;
 import com.edu.mvc3.exception.UploadException;
 
-//컴포넌트 스캔에 의해 메모리에 자동 생성
+//context:component-scan 에 의해 메모리에 자동생성
 @Component
 public class FileManager {
-
-	//파일명 생성하기
+	
+	//파일명 생성하기 
 	public String createFileName(String filename) {
 		long time=System.currentTimeMillis();
-		String ext=filename.substring(filename.lastIndexOf(".")+1,filename.length());
+		String ext=filename.substring(filename.lastIndexOf(".")+1, filename.length());
 		
-		String finalName = time+"."+ext;
-		return finalName ;
+		String finalName=time+"."+ext;
+		return finalName;
 	}
 	
-	public void save(Gallery gallery,String path) throws UploadException{
+	//   /a/b/3434234.png
+	public void save(Gallery gallery, String path) throws UploadException{
 		//서버에 저장
 		MultipartFile multi=gallery.getFile();
 		try {
@@ -38,3 +37,9 @@ public class FileManager {
 		}
 	}
 }
+
+
+
+
+
+

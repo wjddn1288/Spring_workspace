@@ -1,7 +1,6 @@
-<%@page import="com.edu.mvc3.domain.Board"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%
-	Board board = (Board)request.getAttribute("board");
+	board board = (Board)request.getAttribute("board");
 %>
 <!DOCTYPE html>
 <html>
@@ -29,7 +28,7 @@
 <script type="text/javascript">
 $(function(){
 	$("#bt_edit").click(function(){
-		if(confirm("수정하시겠습니까?")){
+		if(confirm("수정하실래요?")){
 			$("#form1").attr({
 				action:"/board/edit",
 				method:"post"
@@ -38,22 +37,14 @@ $(function(){
 		}
 	});
 	
-	$("#bt_regist").click(function(){
-		$("#form1").attr({
-			action:"/board/regist",
-			method:"post"
-		});
-		$("#form1").submit();		
-		
-	});
-	
 	$("#bt_del").click(function(){
-		if(confirm("삭제하시겠습니까?")){
+		if(confirm("삭제하시겠어요?")){
 			$("#form1").attr({
 				action:"/board/delete",
 				method:"post"
 			});
 			$("#form1").submit();		
+			
 		}
 	});
 	
