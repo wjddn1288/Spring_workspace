@@ -1,12 +1,9 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
-<%
-	Board board = (Board)request.getAttribute("board");
-%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>갤러리 글등록</title>
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
@@ -26,26 +23,17 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <script type="text/javascript">
+function regist(){
+	$("#form1").attr({
+		action:"/reboard/regist",
+		method:"post",
+	});	
+	$("#form1").submit();
+}
+
 $(function(){
-	$("#bt_edit").click(function(){
-		if(confirm("수정하실래요?")){
-			$("#form1").attr({
-				action:"/board/edit",
-				method:"post"
-			});
-			$("#form1").submit();		
-		}
-	});
-	
-	$("#bt_del").click(function(){
-		if(confirm("삭제하시겠어요?")){
-			$("#form1").attr({
-				action:"/board/delete",
-				method:"post"
-			});
-			$("#form1").submit();		
-			
-		}
+	$("#bt_regist").click(function(){
+		regist();
 	});
 	
 });
@@ -57,20 +45,18 @@ $(function(){
 		<div class="row">
 			<div class="col mt-3">
 				<form id="form1">
-					<input type="hidden" name="board_idx" value="<%=board.getBoard_idx()%>">
 					<div class="form-group">
-						<input type="text" class="form-control" value="<%=board.getTitle() %>" name="title">
+						<input type="text" class="form-control" placeholder="Enter password" name="title">
 					</div>				
 					<div class="form-group">
-						<input type="text" class="form-control" value="<%=board.getWriter() %>" name="writer">
+						<input type="text" class="form-control" placeholder="Enter password" name="writer">
 					</div>				
 					<div class="form-group">
-						<textarea class="form-control" name="content"><%=board.getContent() %></textarea>
-					</div>				
+						<textarea class="form-control" name="content"></textarea>
+					</div>		
 					<div class="form-group">
-						<button type="button" class="btn btn-info" id="bt_edit">수정</button>
-						<button type="button" class="btn btn-info" id="bt_del">삭제</button>
-						<button type="button" class="btn btn-info" id="bt_list">목록</button>
+						<button type="button" class="btn btn-primary" id="bt_regist">등록</button>
+						<button type="button" class="btn btn-primary" id="bt_list">목록</button>
 					</div>				
 				</form>				
 

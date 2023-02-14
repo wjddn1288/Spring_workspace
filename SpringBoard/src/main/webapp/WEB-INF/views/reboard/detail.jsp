@@ -1,6 +1,7 @@
+<%@page import="com.edu.springboard.domain.ReBoard"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%
-	Board board = (Board)request.getAttribute("board");
+	ReBoard reboard = (ReBoard)request.getAttribute("reboard");
 %>
 <!DOCTYPE html>
 <html>
@@ -30,7 +31,7 @@ $(function(){
 	$("#bt_edit").click(function(){
 		if(confirm("수정하실래요?")){
 			$("#form1").attr({
-				action:"/board/edit",
+				action:"/reboard/edit",
 				method:"post"
 			});
 			$("#form1").submit();		
@@ -40,12 +41,19 @@ $(function(){
 	$("#bt_del").click(function(){
 		if(confirm("삭제하시겠어요?")){
 			$("#form1").attr({
-				action:"/board/delete",
+				action:"/reboard/delete",
 				method:"post"
 			});
 			$("#form1").submit();		
 			
 		}
+	});
+	
+	$("#reply_section").hide();
+	
+	$("#bt_replyform").click(function(){
+		//숨겨져 있던 답변 등록 등장  show(), hide() 
+		$("#reply_section").show();
 	});
 	
 });
@@ -54,28 +62,52 @@ $(function(){
 </head>
 <body>
 	<div class="container">
+		
 		<div class="row">
 			<div class="col mt-3">
 				<form id="form1">
-					<input type="hidden" name="board_idx" value="<%=board.getBoard_idx()%>">
+					<input type="hidden" name="reboard_idx" value="<%=reboard.getReboard_idx()%>">
 					<div class="form-group">
-						<input type="text" class="form-control" value="<%=board.getTitle() %>" name="title">
+						<input type="text" class="form-control" value="<%=reboard.getTitle() %>" name="title">
 					</div>				
 					<div class="form-group">
-						<input type="text" class="form-control" value="<%=board.getWriter() %>" name="writer">
+						<input type="text" class="form-control" value="<%=reboard.getWriter() %>" name="writer">
 					</div>				
 					<div class="form-group">
-						<textarea class="form-control" name="content"><%=board.getContent() %></textarea>
+						<textarea class="form-control" name="content"><%=reboard.getContent() %></textarea>
 					</div>				
 					<div class="form-group">
 						<button type="button" class="btn btn-info" id="bt_edit">수정</button>
 						<button type="button" class="btn btn-info" id="bt_del">삭제</button>
 						<button type="button" class="btn btn-info" id="bt_list">목록</button>
+						<button type="button" class="btn btn-info" id="bt_replyform">답변하기</button>
 					</div>				
 				</form>				
 
 			</div>
 		</div>
+		
+		<div class="row" id="reply_section">
+			<div class="col mt-3">
+				<form id="form2">
+					<input type="hidden" name="reboard_idx" value="<%=reboard.getReboard_idx()%>">
+					<div class="form-group">
+						<input type="text" class="form-control" value="<%=reboard.getTitle() %>" name="title">
+					</div>				
+					<div class="form-group">
+						<input type="text" class="form-control" value="<%=reboard.getWriter() %>" name="writer">
+					</div>				
+					<div class="form-group">
+						<textarea class="form-control" name="content"><%=reboard.getContent() %></textarea>
+					</div>				
+					<div class="form-group">
+						<button type="button" class="btn btn-success" id="bt_reply">답변등록</button>
+					</div>				
+				</form>				
+
+			</div>
+		</div>
+		
 	</div>
 </body>
 </html>
