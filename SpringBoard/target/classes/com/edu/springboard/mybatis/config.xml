@@ -4,9 +4,13 @@
   "https://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 	 <typeAliases>
-	 	<typeAlias type="com.edu.springboard.domain.ReBoard" alias="Reboard"/>
+	 	<typeAlias type="com.edu.springboard.domain.ReBoard" 		alias="Reboard"/>
+	 	<typeAlias type="com.edu.springboard.domain.Gallery" 		alias="Gallery"/>
+	 	<typeAlias type="com.edu.springboard.domain.Photo"		 	alias="Photo"/>
 	 </typeAliases>
   <mappers>
     <mapper resource="com/edu/springboard/mybatis/ReboardMapper.xml"/>
+    <mapper resource="com/edu/springboard/mybatis/GalleryMapper.xml"/>
+    <mapper resource="com/edu/springboard/mybatis/PhotoMapper.xml"/>
   </mappers>
 </configuration>
