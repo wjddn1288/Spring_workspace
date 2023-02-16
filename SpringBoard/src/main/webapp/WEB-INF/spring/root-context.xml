@@ -30,6 +30,8 @@
 	 <!-- 스프링 연동 mysql설정 -->
 	 <!-- mybatis spring에서는 우리가 평소 사용하던 sqlSessionFactory객체를  SqlSessionFactoryBean으로 표현 -->
 	 	<!-- 더 이상 mybatis 자체의 설정파일에서 데이터소스를 얻어오면 안되고 스프링이 취득한 데이터소스를 얻어와야한다 -->
+	 	
+ 	 <!-- Db연동 기술 중 Mybatis Spinrg 사용을 위한 설정-->
 	 <bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean"
 	 	p:configLocation="classpath:com/edu/springboard/mybatis/config.xml"
 	 	p:dataSource-ref="dataSource"/>
@@ -39,6 +41,11 @@
 	 <bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
 	 	<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
 	 </bean>
+	 
+	 <!-- Db연동 기술 중 Spring JDBC 사용을 위한 설정-->
+	 <bean id="jdbcTemplate" 
+	 		class="org.springframework.jdbc.core.JdbcTemplate"
+	 		p:dataSource-ref="dataSource"/>
 	 
  	<!-- DAO, service 등 모델들 자동 등록 -->
 	<context:component-scan base-package="com.edu.springboard.model" />

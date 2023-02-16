@@ -2,22 +2,29 @@ package com.edu.springboard.model.gallery;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.edu.springboard.domain.Gallery;
+import com.edu.springboard.domain.Photo;
+import com.edu.springboard.exception.FileUploadException;
+import com.edu.springboard.exception.GalleryException;
+import com.edu.springboard.exception.PhotoException;
 import com.edu.springboard.model.util.FileManager;
 
 @Service
 public class GalleryServiceImpl implements GalleryService{
-
+	private Logger logger=LoggerFactory.getLogger(this.getClass().getName());
+	
 	@Autowired
-	@Qualifier("MybatisGalleryDAO")
+	@Qualifier("jdbcGalleryDAO")
 	private GalleryDAO galleryDAO; //어떤 DAO를 쓸지 모르니까
 	
 	@Autowired
-	@Qualifier("MybatisGalleryDAO")
+	@Qualifier("jdbcPhotoDAO")
 	private PhotoDAO photoDAO;
 	
 	@Autowired
@@ -25,23 +32,37 @@ public class GalleryServiceImpl implements GalleryService{
 	
 	@Override
 	public List selectAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return galleryDAO.selectAll();
 	}
 
 	@Override
 	public Gallery select(int gallery_idx) {
-		// TODO Auto-generated method stub
-		return null;
+		return galleryDAO.select(gallery_idx);
 	}
 
 	@Override
-	public void regist(Gallery gallery, String path) {
+	public void regist(Gallery gallery, String path) throws FileUploadException, GalleryException, PhotoException{
+		//fileManager 시키기
+		fileManager.save(gallery, path);
+		
 		//gallerydao 시키기
+		//mybatis의 selectkey에 의해 insert 문 수행 이후에는 GalleryDTO의
+		//gallery_idx의 값이 이미 채워져 있을 것임
+		logger.info("insert 이전의 Gallery의 gallery_idx 값"+ gallery.getGallery_idx());
+		galleryDAO.insert(gallery);
+		logger.info("insert 이후의 Gallery의 gallery_idx 값"+ gallery.getGallery_idx());
 		
 		//photodao 시키기
+		//필요한 모든건 Gallery에 다 들어있다..
 		
-		//fileManager 시키기
+		//fileManager에 의해 채워진 photoList활용하기
+		List<Photo> photoList=gallery.getPhotoList();
+		for(int i=0; i<gallery.getPhotoList().size(); i++) {
+			Photo photo=photoList.get(i);
+			photo.setGallery(gallery); //fk를 위하여.. 넣어주기
+			photoDAO.insert(photo);
+			
+		}
 	}
 
 	@Override

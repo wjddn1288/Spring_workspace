@@ -3,6 +3,7 @@ package com.edu.springboard.model.gallery;
 import java.util.List;
 
 import com.edu.springboard.domain.Gallery;
+import com.edu.springboard.exception.FileUploadException;
 
 public interface GalleryService {
 	public List selectAll(); //DAO 동일..

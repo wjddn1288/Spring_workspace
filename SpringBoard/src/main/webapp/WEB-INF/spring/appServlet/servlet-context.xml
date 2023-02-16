@@ -28,4 +28,34 @@
 		<beans:property name="maxUploadSizePerFile" value="3145728"/>
 	</beans:bean>
 	
+	<!-- jackson data binder 등록
+			json 과 자바객체 사이의 자동 변환기(COnverter) -->
+			<beans:bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+				<beans:property name="messageConverters">
+					<beans:list value-type="java.util.ArrayList">
+						<beans:ref bean="mappingJackson2HttpMessageConverter"/>
+					</beans:list>
+				</beans:property>
+			</beans:bean>
+			
+		 <beans:bean id="mappingJackson2HttpMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+		 		<beans:property name="supportedMediaTypes">
+		 			<beans:value>application/json;charset=utf-8</beans:value>
+		 		</beans:property>
+		 </beans:bean>
 </beans:beans>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

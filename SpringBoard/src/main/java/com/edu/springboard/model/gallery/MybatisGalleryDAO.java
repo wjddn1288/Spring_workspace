@@ -12,12 +12,12 @@ import com.edu.springboard.exception.GalleryException;
 @Repository
 public class MybatisGalleryDAO implements GalleryDAO{
 	
-	//Mybatis-Spring 에서는 기존 Mybatis의 쿼리 담당 객체였던 SqlSession이 
-	//SqlSessionTemplate으로 변경됨
+	//Mybatis-Spring 에서는 기존 Mybatis 의 쿼리 담당 객체엿던  SqlSession이 
+	//SqlsessionTemplate으로 변경됨
 	@Autowired
 	private SqlSessionTemplate sqlSessionTemplate;
 	
-	@Override
+	
 	public List selectAll() {
 		return sqlSessionTemplate.selectList("Gallery.selectAll");
 	}
@@ -29,28 +29,27 @@ public class MybatisGalleryDAO implements GalleryDAO{
 
 	@Override
 	public void insert(Gallery gallery) throws GalleryException{
-		int result=sqlSessionTemplate.insert("Gallery.update", gallery);
-		if(result<1) {
-			throw new GalleryException("갤러리 등록 실패");
-		}
+		int result=sqlSessionTemplate.insert("Gallery.insert", gallery);
+		if(result <1) {
+			throw new GalleryException("겔러리 등록실패");
+		}		
 	}
 
 	@Override
-	public void update(Gallery gallery)  throws GalleryException{
+	public void update(Gallery gallery) throws GalleryException {
 		int result=sqlSessionTemplate.update("Gallery.update", gallery);
-		if(result<1) {
-			throw new GalleryException("갤러리 수정 실패");
-		}
-
+		if(result <1) {
+			throw new GalleryException("겔러리 수정실패");
+		}		
 	}
 
 	@Override
-	public void delete(int gallery_idx) {
-		int result=sqlSessionTemplate.delete("Gallery.update", gallery_idx);
-		if(result<1) {
-			throw new GalleryException("갤러리 삭제 실패");
-		}
-		
+	public void delete(int gallery_idx) throws GalleryException{
+		int result=sqlSessionTemplate.delete("Gallery.delete", gallery_idx);
+		if(result <1) {
+			throw new GalleryException("겔러리 삭제실패");
+		}		
+	
 	}
 
 }
