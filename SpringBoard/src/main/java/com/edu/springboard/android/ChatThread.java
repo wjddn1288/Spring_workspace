@@ -41,7 +41,8 @@ public class ChatThread implements Runnable{
 		String msg=null;
 		try {
 			msg=buffr.readLine();
-			System.out.println("클라이언트 msg:"+msg);
+			System.out.println("클라이언트 msg : "+msg);
+			
 			//나에게만 보내지 말고, 서버에 접속한 모든 쓰레드 객체가 가진
 			//send() 메서드를 호출하자!!(Broad Casting...)
 			for(int i=0;i<chatServer.clientList.size();i++) {

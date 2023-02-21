@@ -19,36 +19,34 @@ public class MybatisNoticeDAO implements NoticeDAO{
 	public List selectAll() {
 		return sqlSessionTemplate.selectList("Notice.selectAll");
 	}
-	
+
 	@Override
 	public Notice select(int notice_idx) {
-		return sqlSessionTemplate.selectOne("Notice.select",notice_idx);
+		return sqlSessionTemplate.selectOne("Notice.select", notice_idx);
 	}
+
 	@Override
 	public void insert(Notice notice) throws NoticeException{
-		int result=sqlSessionTemplate.insert("Notice.insert",notice);
+		int result=sqlSessionTemplate.insert("Notice.insert", notice);
 		if(result<1) {
-			throw new NoticeException("공지 글 수정실패");
+			throw new NoticeException("공지글 등록실패");
 		}
 	}
 
 	@Override
-	public void update(Notice notice) throws NoticeException{
-		int result=sqlSessionTemplate.update("Notice.update",notice);
+	public void update(Notice notice) throws NoticeException {
+		int result=sqlSessionTemplate.update("Notice.update", notice);
 		if(result<1) {
-			throw new NoticeException("공지 글 수정실패");
+			throw new NoticeException("공지글 수정실패");
 		}
-		
 	}
 
 	@Override
-	public void delete(int notice_idx) throws NoticeException{
-		int result=sqlSessionTemplate.delete("Notice.delete",notice_idx);
+	public void delete(int notice_idx) throws NoticeException {
+		int result=sqlSessionTemplate.delete("Notice.delete", notice_idx);
 		if(result<1) {
-			throw new NoticeException("공지 글 수정실패");
+			throw new NoticeException("공지글 삭제실패");
 		}
 	}
-
-
 	
 }
