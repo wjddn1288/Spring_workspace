@@ -1,4 +1,9 @@
+<%@page import="com.edu.springshop.domain.Category"%>
+<%@page import="java.util.List"%>
 <%@ page contentType="text/html;charset=UTF-8"%>
+<%
+	List<Category> categoryList = (List)request.getAttribute("categoryList");
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,6 +18,10 @@
 	border:1px solid #ccc;
 	display:inline-block;
 	margin:5px;
+}
+.box-style img{
+	width:75px;
+	height:70px;
 }
 </style>
 </head>
@@ -64,7 +73,12 @@
 							
 							<div class="form-group row">
 								<div class="col">
-									<select class="form-control" name="category_idx"></select>
+									<select class="form-control" name="category_idx">
+										<option value="0">카테고리 선택</option>
+										<%for(Category category : categoryList){ %>
+										<option value="<%=category.getCategory_idx()%>"><%=category.getCategory_name() %></option>
+										<%} %>
+									</select>
 								</div>
 							</div>							
 							
@@ -98,8 +112,8 @@
 							
 							<div class="form-group row">
 								<div class="col">
-									<template v-for="i in count">
-										<imagebox />
+									<template v-for="json in imageList">
+										<imagebox :key="json.key" :obj="json"/> <!-- json자체를 넘겨버림 -->
 									</template>
 								</div>
 							</div>
@@ -112,11 +126,9 @@
 							</div>
 														
 							<div class="form-group row">
-								<div class="col-sm-1">
-									<button type="button" class="btn btn-block btn-danger btn-lg">등록</button>							
-								</div>
-								<div class="col-sm-1">
-									<button type="button" class="btn btn-block btn-danger btn-lg">목록</button>									
+								<div class="col">
+									<button type="button" class="btn btn-danger" id="bt_regist">등록</button>
+									<button type="button" class="btn btn-danger" id="bt_list">목록</button>									
 								</div>
 							</div>							
 							
@@ -124,6 +136,7 @@
 					</div>
 					<!-- /.row (main row) -->
 				</div>
+				
 				<!-- /.container-fluid -->
 			
 			</section>
@@ -141,17 +154,19 @@
 	<%@ include file="../inc/footer_link.jsp" %>
 	<script type="text/javascript">
 		let app1;
+		let key=0; //이미지라서 디비연동 x
 		
 		const imagebox={
 			template:`
 				<div class="box-style">
 					<div>X</div>
-					<img src="" />
+					<img :src="json.binary" />
 				</div>
 			`,
+			props:["obj"],
 			data(){
 				return{
-					
+					json:this.obj
 				};
 			}
 		};
@@ -167,10 +182,82 @@
 			}
 		});
 		
+		/*------------------------------------------
+		중복된 이미지 체크
+		------------------------------------------*/
+		function checkDuplicate(filename){
+			let count=0;
+			
+			for(let i=0; i<app1.imageList.length;i++){
+				let json=app1.imageList[i];
+				if(json.name==filename){ //중복발견
+					count++;
+					break;
+				}
+			}
+			
+			return count;
+		}
+		
+		/*------------------------------------------
+		미리보기
+		------------------------------------------*/
 		function preview(files){
-			//정보를 분석하여  json으로 바꾼다...
-			let json=[];
-			json["key"]=0; //삭제시 사용..
+			
+			//이미지 화면에 출력
+			for(let i=0;i<files.length;i++){
+				let file = files[i];
+				
+				if(checkDuplicate(file.name)<1){ //중복된 이미지가 없을때만...
+					let reader = new FileReader();//스트림 생성
+					reader.onload=(e)=>{
+						
+						key++; //사용자가 이미지를 선택할때마다 1씩 증가하여 중복을 불허한다
+						
+						let json=[]; // imageList배열에 복합적인 정보를 담아놓기 위해 
+						json['key']=key;//추후 이미지 삭제시 기준값으로 사용예정 
+						json['name']=file.name; //중복이미지가 추가되지 않도록... 
+						json['binary']=e.target.result; //src에 대입할 바이너리 정보 
+						json['file']=file; //전송할때 파라미터에 심을 파일
+						
+						app1.imageList.push(json);
+					};
+					reader.readAsDataURL(file);//파일읽기
+				
+				}
+			}
+		}
+		
+		/*------------------------------------------
+		등록
+		------------------------------------------*/
+		function regist(){
+			//파일업로드를 커스터마이징 시켰기 때문에...
+			let formData = new FormData();
+			
+			formData.append("category.category_idx", $("select[name='category_idx']").val());
+			formData.append("product_name", $("input[name='product_name']").val());
+			formData.append("brand", $("input[name='brand']").val());
+			formData.append("price", $("input[name='price']").val());
+			formData.append("discount", $("input[name='discount']").val());
+			formData.append("detail", $("textarea[name='detail']").val());
+			
+			//선택한 이미지 수만큼  formData 에 추가 
+			for(let i=0;i<app1.imageList.length;i++){
+				let json=app1.imageList[i];
+				formData.append("photo", json.file);
+			}
+			
+			$.ajax({
+				url:"/admin/rest/product", 
+				type:"post", 
+				data:formData, 
+				processData:false, /*query string 사용여부*/
+				contentType:false, /* application/x-www-form~~ 사용여부*/
+				success:function(result, status, xhr){
+					console.log(result);
+				}
+			});
 			
 		}
 		
@@ -184,6 +271,11 @@
 			$("input[name='file']").change(function(){
 				console.log(this.files);
 				preview(this.files);
+			});
+			
+			//등록 이벤트 연결 
+			$("#bt_regist").click(function(){
+				regist();
 			});
 			
 		});
