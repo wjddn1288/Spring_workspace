@@ -44,7 +44,7 @@
 	
 	<context:component-scan base-package="com.edu.springshop.model"/>
 	
-	<!-- 파일 업로드르르 위한 빈등록 -->
+	<!-- 파일 업로드르르 위한 빈 등록 -->
 	<beans:bean 
 				id="multipartResolver" 
 				class="org.springframework.web.multipart.commons.CommonsMultipartResolver" 
@@ -66,6 +66,11 @@
 		 		</beans:property>
 		 </beans:bean>
 		 
+		 <!-- 자동등록 말고 수동으로 등록 왜? filemanager가 모델패키지 안에 없으므로 -->
+		 <beans:bean
+		 		id="fileManager"
+		 		class="com.edu.springshop.util.FileManager"/>
+		 	
 </beans>
 
 

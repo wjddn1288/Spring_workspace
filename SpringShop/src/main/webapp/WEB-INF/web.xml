@@ -13,7 +13,7 @@
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
-	
+
 	<!-- 인코딩 설정 -->
 	<filter>
 		<filter-name>encodingFilter</filter-name>
@@ -21,14 +21,28 @@
 		<init-param>
 			<param-name>encoding</param-name>
 			<param-value>UTF-8</param-value>
-		</init-param>
+		</init-param>			
 	</filter>
 	<filter-mapping>
 		<filter-name>encodingFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
+	
+	<!--  기존의 html form이 GeT/Post 만 지원하므로, 필터를 이용하여 원하는 Http Method
+		에 따라 알맞는 컨트롤러를 매핑하기 위한 필터 설정  
+		input type='hidden'  name="_method" value="PUT"  :@PutMapping	
+		input type='hidden'  name="_method" value="DELETE" :@DeleteMapping	
+	-->
+	<filter>
+		<filter-name>httpMethodFilter</filter-name>
+		<filter-class>org.springframework.web.filter.HiddenHttpMethodFilter</filter-class>
+	</filter>		
+	<filter-mapping>
+		<filter-name>httpMethodFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>		
 
-	<!-- 관리자 전용 서블릿 매핑 -->
+	<!-- 관리자 전용  서블릿매핑-->
 	<servlet>
 		<servlet-name>adminServlet</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -44,13 +58,13 @@
 		<url-pattern>/admin/*</url-pattern>
 	</servlet-mapping>
 	
-	<!-- 일반사용자 전용 서블릿 매핑 -->
-		<servlet>
+	<!-- 일반 사용자 전용  서블릿매핑-->
+	<servlet>
 		<servlet-name>userServlet</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
-			<param-value>/WEB-INF/spring/appServlet/user-context.xml</param-value>
+			<param-value>/WEB-INF/spring/appServlet/shop-context.xml</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>

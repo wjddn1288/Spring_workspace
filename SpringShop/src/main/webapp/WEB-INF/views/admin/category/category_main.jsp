@@ -25,121 +25,123 @@
 <body class="hold-transition sidebar-mini layout-fixed">
 	<div class="wrapper">
 
-		<!-- Preloader -->
-		<%@ include file="../inc/preloader.jsp" %>
-		
-		<!-- Navbar -->
-		<%@ include file="../inc/navbar.jsp" %>
-		<!-- /.navbar -->
+	<!-- Preloader -->
+	<%@ include file="../inc/preloader.jsp" %>
+	
+	<!-- Navbar -->
+	<%@ include file="../inc/navbar.jsp" %>
+	<!-- /.navbar -->
 
-		<!-- Main Sidebar Container -->
-		<%@ include file="../inc/sidebar_left.jsp" %>
-		
-		
-		<!-- Content Wrapper. Contains page content -->
-		<div class="content-wrapper">
-			<!-- Content Header (Page header) -->
-			<div class="content-header">
-				<div class="container-fluid">
-					<div class="row mb-2">
-						<div class="col-sm-6">
-							<h1 class="m-0">카테고리 관리</h1>
-						</div>
-						<!-- /.col -->
-						<div class="col-sm-6">
-							<ol class="breadcrumb float-sm-right">
-								<li class="breadcrumb-item"><a href="#">Home</a></li>
-								<li class="breadcrumb-item active">상품관리> 상품등록</li>
-							</ol>
-						</div>
-						<!-- /.col -->
+	<!-- Main Sidebar Container -->
+	<%@ include file="../inc/sidebar_left.jsp" %>
+	
+	
+	<!-- Content Wrapper. Contains page content -->
+	<div class="content-wrapper">
+		<!-- Content Header (Page header) -->
+		<div class="content-header">
+			<div class="container-fluid">
+				<div class="row mb-2">
+					<div class="col-sm-6">
+						<h1 class="m-0">카테고리 관리</h1>
 					</div>
-					<!-- /.row -->
+					<!-- /.col -->
+					<div class="col-sm-6">
+						<ol class="breadcrumb float-sm-right">
+							<li class="breadcrumb-item"><a href="#">Home</a></li>
+							<li class="breadcrumb-item active">상품관리> 상품등록</li>
+						</ol>
+					</div>
+					<!-- /.col -->
 				</div>
-				<!-- /.container-fluid -->
+				<!-- /.row -->
 			</div>
-			<!-- /.content-header -->
+			<!-- /.container-fluid -->
+		</div>
+		<!-- /.content-header -->
 
-			<!-- Main content -->
-			<section class="content" id="app1">
-				<div class="container-fluid">
+		<!-- Main content -->
+		<section class="content" id="app1">
+			<div class="container-fluid">
+			
+				<!-- Main row -->
+				<div class="row">
 				
-					<!-- Main row -->
-					<div class="row">
-					
-						<div class="col-7">
-						    <div class="card">
-						        <!-- /.card-header -->
-					        	
-					        	
-						        <div class="card-body table-responsive p-0">
-						            <table class="table table-hover text-nowrap">
-						                <tbody>
-											<tr>
-												<td colspan="2">
-									        		<div class="form-group row">
-									        			<div class="col-sm-9">
-										                    <input type="text" name="category_name" class="form-control" placeholder="카테고리 입력">
-									        			</div>
-									        			<div class="col-sm-3">
-										                    <button type="button" class="btn btn-danger" id="bt_regist">등록</button>
-									        			</div>
-									        		</div>
-												</td>
-											</tr>
-											
-											<template v-for="category in categoryList">						                
-							                    <row :key="category.category_idx" :obj="category"/>
-						                    </template>
-						                    
-						                </tbody>
-						            </table>
-						        </div>
-						        
-						        
-						        <!-- /.card-body -->
-						    </div>
-						    <!-- /.card -->
-						</div>					
-					
-					
-						<div class="col-5">
-						    <div class="card">
-						    
-						        <div class="card-body">
+					<div class="col-7">
+					    <div class="card">
+					        <!-- /.card-header -->
+				        	
+				        	
+					        <div class="card-body table-responsive p-0">
+					            <table class="table table-hover text-nowrap">
+					                <tbody>
+										<tr>
+											<td colspan="2">
+								        		<div class="form-group row">
+								        			<div class="col-sm-9">
+									                    <input type="text" name="category_name" class="form-control" placeholder="카테고리 입력">
+								        			</div>
+								        			<div class="col-sm-3">
+									                    <button type="button" class="btn btn-danger" id="bt_regist">등록</button>
+								        			</div>
+								        		</div>
+											</td>
+										</tr>
+										
+										<template v-for="category in categoryList">						                
+						                    <row :key="category.category_idx" :obj="category"/>
+					                    </template>
+					                    
+					                </tbody>
+					            </table>
+					        </div>
+					        
+					        <!-- /.card-body -->
+					    </div>
+					    <!-- /.card -->
+					</div>					
+				
+					<div class="col-5">
+					    <div class="card">
+					    
+					        <div class="card-body">
+					        	<form id="form2">
+					        		<input type="hidden" name="_method">
+					        		<input type="hidden" name="category_idx">
 					        		<div class="form-group row">
 					        			<div class="col-6">
-						                    <input type="text" name="table_search" class="form-control" >
+						                    <input type="text" name="category_name" class="form-control" >
 					        			</div>
 					        			<div class="col-3">
-						                    <button type="button" class="btn btn-danger">수정</button>
+						                    <button type="button" class="btn btn-danger" id="bt_edit">수정</button>
 					        			</div>
 					        			<div class="col-3">
-						                    <button type="button" class="btn btn-danger">삭제</button>
+						                    <button type="button" class="btn btn-danger" id="bt_del">삭제</button>
 					        			</div>
 					        		</div>
-						        </div>
-						        
-						    </div>
-						</div>					
-					
-					
-					</div>
-					<!-- /.row (main row) -->
-				</div>
+				        		</form>
+					        </div>
+					        
+					    </div>
+					</div>					
 				
-				<!-- /.container-fluid -->
+				
+				</div>
+				<!-- /.row (main row) -->
+			</div>
 			
-			</section>
-			<!-- /.content -->
-		</div>
-		<!-- /.content-wrapper -->
+			<!-- /.container-fluid -->
 		
-		<%@ include file="../inc/footer.jsp" %>		
+		</section>
+		<!-- /.content -->
+	</div>
+	<!-- /.content-wrapper -->
+	
+	<%@ include file="../inc/footer.jsp" %>		
 
-		<!-- Control Sidebar -->
-		<%@ include file="../inc/sidebar_right.jsp" %>
-		<!-- /.control-sidebar -->
+	<!-- Control Sidebar -->
+	<%@ include file="../inc/sidebar_right.jsp" %>
+	<!-- /.control-sidebar -->
 	</div>
 	<!-- ./wrapper -->
 	<%@ include file="../inc/footer_link.jsp" %>
@@ -150,7 +152,7 @@
 			template:`
 				<tr>
 					<td>{{category.category_idx}}</td>
-					<td>{{category.category_name}}</td>
+					<td @click="getDetail(category)"><a href="#">{{category.category_name}}</a></td>
 				</tr>
 			`,
 			props:["obj"],
@@ -158,7 +160,16 @@
 				return{
 					category:this.obj
 				};
+			},
+			methods:{
+				getDetail:function(category){
+					//우측 상세보기  영역에 데이터 출력
+					$("#form2 input[name='category_idx']").val(category.category_idx);//category_idx
+					$("#form2 input[name='category_name']").val(category.category_name);//category_name
+					//category_name
+				}
 			}
+			
 		};
 		
 		app1=new Vue({
@@ -171,7 +182,6 @@
 				categoryList:[]  
 			}
 		});
-		
 
 		/*------------------------------------------
 		등록
@@ -186,6 +196,7 @@
 				// 서버로부터 전송된 Http 응답 헤더 정보가 성공일때 반응
 				success:function(result, status, xhr){
 					alert(result.msg); //{code:, msg:"성공"}
+					getCategoryList();
 				},
 				//서버로부터 전송된 Http 응답 헤더 정보가 실패일때 반응
 				error:function(xhr, statusm, err){
@@ -207,6 +218,72 @@
 			});
 		}
 		
+		//수정 요청
+		//html의 form 태그는 GET/POST 만 지원
+		function edit(){
+			//히든에 들어있는 _method 값을 Put으로 놓자
+			$("form2 input[name='_method']").val("PUT");
+			
+			$("form2").attr({
+				action:"/admin/category/edit",
+				method:"POST"
+			});
+			$("#form2").submit();
+			
+		}
+		
+		//비동기방식의 수정 요청
+		function editAsync(){
+			//전송 데이터를 ajax의 형식으로 전송
+			
+			let json={};
+			json['category_idx']=$("#form2 input[name='category_idx']").val();
+			json['category_name']=$("#form2 input[name='category_name']").val();
+			
+			$.ajax({
+				url:"/admin/rest/category",
+				type:"PUT",
+				contentType:"application/json;charset=utf-8", //header 정보구성
+				//웹상의 데이터 교환시 데이터형식은 무조건, 문자열이 되어야 한다..
+				//따라서 자바스크립트 내장객체인 json 자체는 전송대상이 될 수 없다.
+				//해결책 : 문자열화 시키되 개발자가 일일이 수작업으로 하지말고, JSON.Stringify()이용
+				data:JSON.stringify(json), //body 정보구성
+				processData:false, //query String화 여부 
+				success:function(result, status, xhr){
+					console.log(result);
+					//다시 목록 갱신
+					getCategoryList();
+				},
+				error:function(xhr,status, err){
+					
+				}
+			});  
+		}
+		
+		//비동기 방식의 수정 요청
+		function editAsync(){
+			if(!confirm("수정하시겠습니까?")){
+				return;				
+			}
+		}
+		
+		function delAsync(){
+			if(!confirm("삭제하시겠습니까?")){
+				return;				
+			}
+			
+			$.ajax({
+				url:"/admin/rest/category/"+$("#form2 input[name='category_idx']").val(),
+				type:"DELETE",
+				success:function(result, status, xhr){
+					getCategoryList();
+				},
+				error:function(xhr, status, err){
+					
+				}
+			});
+		}
+		
 		$(function(){
 
 			//비동기로 카테고리 목록 가져오기
@@ -215,6 +292,13 @@
 			//등록 이벤트 연결 
 			$("#bt_regist").click(function(){
 				regist();
+			});
+			$("#bt_edit").click(function(){
+				//edit();
+				editAsync();
+			});
+			$("#bt_del").click(function(){
+				delAsync();
 			});
 			
 		});

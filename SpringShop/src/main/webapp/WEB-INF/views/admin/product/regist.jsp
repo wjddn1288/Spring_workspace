@@ -255,7 +255,7 @@
 				processData:false, /*query string 사용여부*/
 				contentType:false, /* application/x-www-form~~ 사용여부*/
 				success:function(result, status, xhr){
-					console.log(result);
+					alert(result.msg);
 				}
 			});
 			
@@ -276,6 +276,10 @@
 			//등록 이벤트 연결 
 			$("#bt_regist").click(function(){
 				regist();
+			});
+			
+			$("#bt_list").click(function(){
+				location.href="/admin/product/list";
 			});
 			
 		});
