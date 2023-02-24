@@ -1,4 +1,10 @@
+<%@page import="com.edu.springshop.domain.Category"%>
+<%@page import="java.util.List"%>
 <%@ page contentType="text/html;charset=UTF-8"%>
+	<%
+		//카테고리 목록 가져오기
+		List<Category> categoryList=(List)request.getAttribute("categoryList");
+	%>
     <header class="header">
         <div class="container-fluid">
             <div class="row">
@@ -11,12 +17,12 @@
                     <nav class="header__menu">
                         <ul>
                             <li class="active"><a href="./index.html">Home</a></li>
-                            <%//for(int i=0;i<categoryList.size();i++){ %>
-                            <%// Category category=categoryList.get(i);%>
-                            <li><a href="#"><%//=category.getCategory_name() %></a></li>
-                            <%//} %>
+                            <%for(int i=0;i<categoryList.size();i++){ %>
+                            <% Category category=categoryList.get(i);%>
+                            <li><a href="#"><%=category.getCategory_name() %></a></li>
+                            <%} %>
                             
-                            <li><a href="/shop.jsp">Shop</a></li>
+                            <li><a href="/shop/list">Shop</a></li>
                             <li><a href="#">Pages</a>
                                 <ul class="dropdown">
                                     <li><a href="./product-details.html">Product Details</a></li>
@@ -25,8 +31,6 @@
                                     <li><a href="./blog-details.html">Blog Details</a></li>
                                 </ul>
                             </li>
-                            <li><a href="./blog.html">Blog</a></li>
-                            <li><a href="./contact.html">Contact</a></li>
                         </ul>
                     </nav>
                 </div>
@@ -34,7 +38,6 @@
                     <div class="header__right">
                         <div class="header__right__auth">
 
-                            <a href="/member/loginform.jsp">Login</a>
                             <a href="/member/joinform.jsp">Register</a>
                             <a href="/member/logout.jsp">logout</a>
 

@@ -256,6 +256,15 @@
 				contentType:false, /* application/x-www-form~~ 사용여부*/
 				success:function(result, status, xhr){
 					alert(result.msg);
+				},
+				error:function(xhr, status, err){
+					console.log("xhr", xhr);
+					console.log("status", status);
+					console.log("err", err);
+					
+					//JSON.stringify() json --> String 왜 바꿧나? 전송할려고.. 전송할려면 문자로 보내야되니까!
+					let json = JSON.parse(xhr.responseText); //String --> json 거꾸로 접근할려고
+					alert(json.msg);
 				}
 			});
 			

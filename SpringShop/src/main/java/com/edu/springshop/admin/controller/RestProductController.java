@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.edu.springshop.domain.Product;
+import com.edu.springshop.exception.PimgException;
+import com.edu.springshop.exception.ProductException;
 import com.edu.springshop.exception.UploadException;
 import com.edu.springshop.model.product.ProductService;
 import com.edu.springshop.util.Message;
@@ -37,7 +39,7 @@ public class RestProductController {
 		//웹환경과 관련된 코드 이므로, 컨트롤러의 책임이다!!
 		//왜 ? 모델은 중립적이니깐... 관심도 없다
 		ServletContext application = request.getSession().getServletContext();
-		String path=application.getRealPath("/resources/data");
+		String path=application.getRealPath("/resources/data/");
 		logger.info("저장될 실제 경로는"+path);
 		
 		//3단계 : 일시키기
@@ -51,6 +53,17 @@ public class RestProductController {
 	}
 		
 	//예외처리
+	@ExceptionHandler(ProductException.class)
+	public ResponseEntity<Message> handle(ProductException e){
+		
+		Message message= new Message();
+		message.setMsg(e.getMessage());
+		
+		ResponseEntity entity= new ResponseEntity<Message>(message, HttpStatus.INTERNAL_SERVER_ERROR);
+		return entity;
+	}
+	
+	//예외처리
 	@ExceptionHandler(UploadException.class)
 	public ResponseEntity<Message> handle(UploadException e){
 		
@@ -61,6 +74,17 @@ public class RestProductController {
 		return entity;
 	}
 	
+	//예외처리
+	@ExceptionHandler(PimgException.class)
+	public ResponseEntity<Message> handle(PimgException e){
+		
+		Message message= new Message();
+		message.setMsg(e.getMessage());
+		
+		ResponseEntity entity= new ResponseEntity<Message>(message, HttpStatus.INTERNAL_SERVER_ERROR);
+		return entity;
+	}
+
 }
 
 
