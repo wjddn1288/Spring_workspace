@@ -38,8 +38,8 @@
                     <div class="header__right">
                         <div class="header__right__auth">
 
-                            <a href="/member/joinform.jsp">Register</a>
-                            <a href="/member/logout.jsp">logout</a>
+                            <a href="/member/loginform">logout</a>
+                            <a href="/member/joinform">Register</a>
 
                         </div>
                         <ul class="header__right__widget">
