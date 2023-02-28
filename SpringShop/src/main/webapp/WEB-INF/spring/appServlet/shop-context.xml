@@ -61,7 +61,15 @@
 		</aop:aspect>
 	</aop:config>
 	
+	<!-- Rest 요청에 대한 글로벌 예외를 처리할 빈 등록 -->
+<!-- 	<beans:bean id="restGlobalException" 
+		class="com.edu.springshop.aop.RestGlobalException"></beans:bean>	 -->
 </beans:beans>
+
+
+
+
+
 
 
 

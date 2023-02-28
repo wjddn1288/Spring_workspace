@@ -1,5 +1,7 @@
 package com.edu.springshop.admin.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -15,7 +17,7 @@ public class CategoryController {
 	
 	//카테고리관리 메인 요청 
 	@GetMapping("/category/main")
-	public ModelAndView getMain() {
+	public ModelAndView getMain(HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("admin/category/category_main");
 		

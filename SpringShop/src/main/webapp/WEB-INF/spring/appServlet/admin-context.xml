@@ -3,7 +3,11 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
-	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
@@ -25,6 +29,29 @@
 	
 	<context:component-scan base-package="com.edu.springshop.admin.controller" />
 	
+	<!-- 관리자와 관련된 글로벌 예외 빈 등록 -->
+	<beans:bean 
+			id="adminGlobalException" 
+			class="com.edu.springshop.aop.AdminGlobalException"/>
+	
+	<!-- 관리자의 로그인 체크를 위한 빈 설정 -->
+	<beans:bean 
+			id="adminLoginCheckAdvice" 
+			class="com.edu.springshop.aop.AdminLoginCheckAdvice"/>
+	
+	<!-- 관점 등록 AOP 설정 -->
+	<aop:config>
+		<aop:aspect ref="adminLoginCheckAdvice"> <!-- 공통코드가 누구야? -->
+			<aop:pointcut expression="execution(public * com.edu.springshop.admin.controller..*(..))" id="adminLoginCheckPointcut"/> <!-- 지점 -->
+			<aop:around method="sessionCheck" pointcut-ref="adminLoginCheckAdvice"/> <!-- 시점 -->
+		</aop:aspect>
+	</aop:config>
 	
 	
 </beans:beans>
+
+
+
+
+
+

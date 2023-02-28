@@ -34,28 +34,9 @@ public class RestMemberController {
 		return entity;
 	}
 	
-	@ExceptionHandler(HashException.class)
-	public ResponseEntity<Message> handle(HashException e){
-		Message message= new Message();
-		message.setMsg("회원가입 실패");
+	@ExceptionHandler(value= {HashException.class, EmailException.class, MemberException.class})
+	public ResponseEntity<Message> handle(RuntimeException e){
 		
-		ResponseEntity entity=new ResponseEntity<Message>(message, HttpStatus.INTERNAL_SERVER_ERROR);
-		return entity;
-
-	};
-	
-	@ExceptionHandler(EmailException.class)
-	public ResponseEntity<Message> handle(EmailException e){
-		Message message= new Message();
-		message.setMsg("회원가입 실패");
-		
-		ResponseEntity entity=new ResponseEntity<Message>(message, HttpStatus.INTERNAL_SERVER_ERROR);
-		return entity;
-
-	};
-	
-	@ExceptionHandler(MemberException.class)
-	public ResponseEntity<Message> handle(MemberException e){
 		Message message= new Message();
 		message.setMsg("회원가입 실패");
 		
