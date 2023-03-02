@@ -28,10 +28,10 @@ public class MybatisMemberDAO implements MemberDAO{
 	@Override
 	public void insert(Member member) throws MemberException{
 		int result=sqlSessionTemplate.insert("Member.insert", member);
-//		result=0;
-				if(result<1) {
-					throw new MemberException("회원 정보 등록 실패");
-				}
+		result=0;
+		if(result<1) {
+			throw new MemberException("회원 정보 등록 실패");
+		}
 	}
 
 	@Override

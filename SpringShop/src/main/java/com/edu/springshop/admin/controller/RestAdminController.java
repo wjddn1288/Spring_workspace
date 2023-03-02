@@ -23,7 +23,7 @@ public class RestAdminController {
 	@Autowired
 	private AdminService adminService;
 	
-	//로그인 요청 처리
+	//로그인 요청 처리 
 	@PostMapping("/login/admin")
 	public ResponseEntity<Message> loginCheck(Admin admin, HttpServletRequest request){
 		//3단계 일시키기
@@ -31,21 +31,27 @@ public class RestAdminController {
 		
 		//세션에 담기
 		HttpSession session=request.getSession();
-		session.setAttribute("admin",obj);
+		session.setAttribute("admin", obj);
+			
+		Message message = new Message();
+		message.setMsg("로그인성공");
 		
-		Message message= new Message();
-		message.setMsg("로그인 성공");
-		
-		ResponseEntity<Message> entity= new ResponseEntity<Message>(message, HttpStatus.OK);
+		ResponseEntity entity = new ResponseEntity<Message>(message, HttpStatus.OK);
 		return entity;
-	} 
+	}
+	
+	/*
 	@ExceptionHandler(AdminException.class)
 	public ResponseEntity<Message> handle(AdminException e){
-		Message message= new Message();
+		Message message = new Message();
 		message.setMsg(e.getMessage());
-		
-		ResponseEntity<Message> entity= new ResponseEntity<Message>(message, HttpStatus.INTERNAL_SERVER_ERROR);
+		ResponseEntity entity = new ResponseEntity<Message>(message, HttpStatus.INTERNAL_SERVER_ERROR);
 		return entity;
-
 	}
+	*/
 }
+
+
+
+
+

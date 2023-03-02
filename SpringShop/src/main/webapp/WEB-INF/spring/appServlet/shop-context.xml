@@ -5,12 +5,12 @@
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:aop="http://www.springframework.org/schema/aop"
 	
-	xsi:schemaLocation=
-		"http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
-		 http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd
-		
-		 http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
-		 http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+	
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	
@@ -28,43 +28,53 @@
 	
 	<context:component-scan base-package="com.edu.springshop.shop.controller" />
 	
-	<!-- 공통관심 사항인 Bell을 Advice로 등록하자 -->
+	<!-- 공통관심 사항인 Bell을  Advice로 등록하자 -->
 	<beans:bean id="bell" class="com.edu.springshop.aop.Bell"/>
 	
-	<!-- 공통관심 사항인 CategoryAdice을 Advice로 등록하자 -->
-	<beans:bean id="categoryAdvice" class="com.edu.springshop.aop.CategoryAdvice"/>
+	<!-- 공통관심 사항인 CategoryAdivce를  Advice로 등록하자 -->
+	<beans:bean id="categoryAdvice" 
+		class="com.edu.springshop.aop.CategoryAdvice"/>
 	
-	<!-- 학생을 등록한다 -->
-	<beans:bean 
-			id="student" 
-			class="com.edu.springshop.school.Student"/>
-			
-	<!-- 관점(Aspect)을 정의하자 -->
-	<!-- <aop:config>
-		<aop:aspect ref="bell" id="bellAspect">
+	<!-- 학생을 등록한다  -->
+	<beans:bean
+		id="student" 
+		class="com.edu.springshop.school.Student"/>
 		
-			지점 등록 
-			execute 패키지명,클래스명,메서드명
+	<!-- 관점(Aspect)을 정의하자 -->
+	<!-- 	
+	<aop:config>
+		<aop:aspect ref="bell" id="bellAspect">
+			지점  등록
 			<aop:pointcut expression="execution(public * com.edu.springshop.school.Student..*(..))" id="bellPointcut"/>
 			
-			시점 등록, 어느 지점에, 어느 시점에 관여할지..
-			ref 지점 이전에!
+			시점 등록, 어느지점에 어느시점에 관여할지..
 			<aop:before method="ding" pointcut-ref="bellPointcut"/>
 		</aop:aspect>
-	</aop:config> -->
+	</aop:config>		
+ 	-->
+ 	
+ 	<!-- 쇼핑몰 카테고리 가져오기 관점 정의 -->
+ 	<aop:config>
+		<aop:aspect ref="categoryAdvice" id="categoryAspect">
+			<aop:pointcut expression="execution(public * com.edu.springshop.shop.controller..*(..))" id="categoryPointcut"/>
+			<aop:around method="getCategoryList" pointcut-ref="categoryPointcut"/>				
+		</aop:aspect> 	 	
+ 	</aop:config>
 	
-	<!-- 쇼핑몰 카테고리 가져오기 관점 정의 -->
-	<aop:config>
-		<aop:aspect ref="categoryAdvice" id="categoryAspect"> <!-- 공통코드 -->
-			<aop:pointcut expression="execution(public * com.edu.springshop.shop.controller..*(..))" id="categoryPointcut"/> <!-- 지점 -->
-			<aop:around method="getCategoryList" pointcut-ref="categoryPointcut"/> <!-- 시점(around): 핵심로직 메서드 호출 전,후 가장범위가 큰 어라운드 -->
-		</aop:aspect>
-	</aop:config>
+	<!-- Rest 요청에 대한 글로벌 예외를 처리할 빈 등록 
+			json 등의 데이터로 결과를 보여주는 예외 객체
+	-->
+	<beans:bean 
+		id="restShopGlobalException" 
+		class="com.edu.springshop.aop.RestShopGlobalException"/>
 	
-	<!-- Rest 요청에 대한 글로벌 예외를 처리할 빈 등록 -->
-<!-- 	<beans:bean id="restGlobalException" 
-		class="com.edu.springshop.aop.RestGlobalException"></beans:bean>	 -->
+	<!-- 글로벌 예외 jsp로 결과를 보여주는 예외객체 -->
+	<beans:bean
+		id="shopGlobalException" 
+		class="com.edu.springshop.aop.ShopGlobalException"/>		 		
+ 
 </beans:beans>
+
 
 
 

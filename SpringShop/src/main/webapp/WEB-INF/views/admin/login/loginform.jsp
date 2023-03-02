@@ -32,7 +32,8 @@
 		        </div>
 		        <!-- /.card-body -->
 		        <div class="card-footer">
-		            <button type="button" class="btn btn-info" id="bt_login">Sign in</button>
+		            <button type="button" class="btn btn-info" id="bt_loginasync">비동기 로그인</button>
+		            <button type="button" class="btn btn-info" id="bt_login">동기 로그인</button>
 		            <button type="button" class="btn btn-default float-right">Cancel</button>
 		        </div>
 		        <!-- /.card-footer -->
@@ -43,7 +44,7 @@
 	<!-- ./wrapper -->
 	<%@ include file="../inc/footer_link.jsp" %>
 	<script type="text/javascript">
-		function login(){
+		function loginAsync(){
 			let formData = $("#form1").serialize(); 
 				
 			$.ajax({
@@ -52,7 +53,7 @@
 				data: formData, 
 				success:function(result, status, xhr){
 					alert(result.msg);
-					location.href="/admin/main"; //관리자 메인 요청
+					location.href="/admin/main";//관리자 메인 요청
 				},
 				error:function(xhr, status, err){
 					let json=JSON.parse(xhr.responseText);
@@ -61,10 +62,26 @@
 			});
 		}
 		
+		//동기방식 요청
+		function login(){
+			$("#form1").attr({
+				action:"/admin/login",
+				method:"post"
+			});
+			$("#form1").submit();
+		}
+		
+		
 		$(function(){
-			$("#bt_login").click(function(){
+			
+			$("#bt_loginasync").click(function(){ //비동기 로그인 요청
+				loginAsync();		
+			});
+			
+			$("#bt_login").click(function(){ //동기 로그인 요청
 				login();		
 			});
+			
 		});
 	
 	</script>	

@@ -25,30 +25,36 @@
     <!-- Header Section Begin -->
     <%@ include file="../inc/header_section.jsp"%>
     <!-- Header Section End -->
-    
     <section>
     	<div class="container">
     		<div class="row m-5">
     			<div class="col">
-    				<form id="form1">
-					    <div class="form-group">
-					      <input type="text" class="form-control" placeholder="Enter id" name="id">
-					    </div>
-					    <div class="form-group">
-						      <input type="text" class="form-control" placeholder="Enter name" name="name">
-					    </div>					    
-					    <div class="form-group">
-						      <input type="text" class="form-control" placeholder="Enter pass" name="pass">
-					    </div>	
-  					    <div class="form-group">
-					      <input type="text" class="form-control" placeholder="Enter email" name="email">
-					    </div>
-					    <button type="button" class="btn btn-primary" id="bt_regist">가입</button>
-					  </form>
+				    <form id="form1">
+				        <div class="form-group">
+				            <input type="text" class="form-control" placeholder="Enter id" name="id">
+				        </div>
+				        <div class="form-group">
+				            <input type="text" class="form-control" placeholder="Enter pass" name="pass">
+				        </div>
+				        <div class="form-group">
+				            <input type="text" class="form-control" placeholder="Enter name" name="name">
+				        </div>
+				        <div class="form-group">
+				            <input type="text" class="form-control" placeholder="Enter email" name="email">
+				        </div>
+				        <button type="button" class="btn btn-primary" id="bt_registasync">비동기 가입</button>
+				        <button type="button" class="btn btn-primary" id="bt_regist">동기 가입</button>
+				        
+				    </form>
+    			
     			</div>
     		</div>
     	</div>
     </section>
+    
+    
+    
+    
     
 	<!-- Instagram Begin -->
 	<%@ include file="../inc/insta.jsp" %>
@@ -65,45 +71,48 @@
 <!-- Js Plugins -->
 <%@ include file="../inc/footer_link.jsp" %>
 <script type="text/javascript">
-function regist(){
-	let formdata=$("#form1").serialize(); //쿼리 스트링으로 변환..
-/* 	$("#form1").attr({
-		action:"/member/join.jsp",
-		method:"post"
-	});
-	$("#form1").submit(); */
+function registAsync(){
+	let formData=$("#form1").serialize(); //쿼리스트링으로 변환..
 	
-	//비동기 요청
+	//비동기 요청 
 	$.ajax({
 		url:"/rest/member",
 		type:"POST",
-		data: formdata,
-		success:function(result,status, xhr){
+		data: formData, 
+		success:function(result, status, xhr){
 			alert(result.msg);
 		},
 		error:function(xhr, status, err){
-			JSON.parse(xhr.responseText);
+			let json=JSON.parse(xhr.responseText);
 			alert(json.msg);
 		}
-		
 	});
+	
 }
 
+function regist(){
+	$("#form1").attr({
+		action:"/member/regist",
+		method:"post"
+	});	
+	$("#form1").submit();
+}
+
+
 $(function(){
-	$("#bt_regist").click(function(){
-		regist();
+	$("#bt_registasync").click(function(){
+		registAsync();	
 	});
+	
+	$("#bt_regist").click(function(){
+		regist();	
+	});
+	
 });
 </script>
 </body>
 
 </html>
-
-
-
-
-
-
 
 
 

@@ -2,6 +2,8 @@ package com.edu.springshop.shop.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +21,7 @@ public class ShopController {
 	
 	//상품 리스트 페이지 요청 처리 
 	@GetMapping("/shop/list")
-	public ModelAndView getList(String babo) {
+	public ModelAndView getList( HttpServletRequest request, String babo) {
 		//3단계
 		
 		List productList=productService.selectAll();

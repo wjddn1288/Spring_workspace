@@ -1,148 +1,72 @@
-<%@page import="com.jspshop.domain.Product"%>
+<%@page import="org.apache.ibatis.session.SqlSession"%>
+<%@page import="com.jspshop.repository.ProductDAO"%>
+<%@page import="com.jspshop.mybatis.MybatisConfig"%>
+<%@page import="com.jspshop.domain.Member"%>
 <%@page import="com.jspshop.domain.Cart"%>
-<%@page import="com.jspshop.domain.Category"%>
+<%@page import="com.jspshop.domain.Product"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
 <%@ page contentType="text/html;charset=UTF-8"%>
-<%
-	//장바구니를 세션으로 구현했으므로, 세션에 들어있는 
-	//장바구니 관련 객체를 끄집어 내서 표로 출력하자!!
-	List<Cart> sessionCartList=(List)session.getAttribute("cartList");
+<%!
+	MybatisConfig mybatisConfig = MybatisConfig.getInstance();
+	ProductDAO productDAO = new ProductDAO();
 %>
-<!DOCTYPE html>
-<html lang="zxx">
-<head>
-<%@ include file="/inc/header.jsp" %>
-</head>
-<body>
-    <!-- Page Preloder -->
-	<%@ include file="/inc/preloader.jsp" %>
-
-    <!-- Offcanvas Menu Begin -->
-    <!-- 
-    	jsp자체에서 지원하는 태그 
-     	왜 써야 하나? 사실 jsp는 디자인 영역이므로, 개발자만 사용하는 것이
-     	아니라 퍼블리셔, 웹디자이너와 공유를 한다..이때  java 에 대한 
-     	非전문가들은 java 코드를 이해할 수 없기 때문에, 그들이 좀더 쉽게
-     	다가갈 수 있도록 태그를 지원해준다 ( 협업 때문에 )
-     -->
-	<%@ include file="/inc/main_navi.jsp"%>    
-    <!-- Offcanvas Menu End -->
-
-    <!-- Header Section Begin -->
-    <%@ include file="/inc/header_section.jsp"%>
-    <!-- Header Section End -->
-    
-    <!-- Shop Cart Section Begin -->
-    <section class="shop-cart spad">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="shop__cart__table">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Product</th>
-                                    <th>Price</th>
-                                    <th>Quantity</th>
-                                    <th>Total</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <%for(Cart cart : sessionCartList){ %>
-                                <%Product product=cart.getProduct(); %>
-                                    <tr>
-                                        <td class="cart__product__item">
-                                            <img width="50px" src="/data/<%=product.getPimgList().get(0).getFilename() %>" alt="">
-                                            <div class="cart__product__item__title">
-                                                <h6><%=product.getProduct_name() %></h6>
-                                                <div class="rating">
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="cart__price"><%=product.getPrice() %></td>
-                                        <td class="cart__quantity">
-                                            <div class="pro-qty">
-                                                <input type="text" value="1">
-                                            </div>
-                                        </td>
-                                        <td class="cart__total"><%=product.getPrice()* cart.getEa() %>0</td>
-                                        <td class="cart__close"><span class="icon_close"></span></td>
-                                    </tr>
-                                <%} %>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-6 col-md-6 col-sm-6">
-                    <div class="cart__btn">
-                        <a href="#">Continue Shopping</a>
-                    </div>
-                </div>
-                <div class="col-lg-6 col-md-6 col-sm-6">
-                    <div class="cart__btn update__btn">
-                        <a href="#"><span class="icon_loading"></span> Update cart</a>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="discount__content">
-                        <h6>Discount codes</h6>
-                        <form action="#">
-                            <input type="text" placeholder="Enter your coupon code">
-                            <button type="submit" class="site-btn">Apply</button>
-                        </form>
-                    </div>
-                </div>
-                <div class="col-lg-4 offset-lg-2">
-                    <div class="cart__total__procced">
-                        <h6>Cart total</h6>
-                        <ul>
-                            <li>Subtotal <span>$ 750.0</span></li>
-                            <li>Total <span>$ 750.0</span></li>
-                        </ul>
-                        <a href="#" class="primary-btn">Proceed to checkout</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Shop Cart Section End -->
-
-    
-	<!-- Instagram Begin -->
-	<%@ include file="/inc/insta.jsp" %>
-	<!-- Instagram End -->
+<%
+	//클라이언트의 장바구니 등록 요청을 처리한다 
 	
-	<!-- Footer Section Begin -->
-	<%@ include file="/inc/footer.jsp" %>
-	<!-- Footer Section End -->
+	//지금 요청이, 만일 최초의 요청이라면 고양이는 세션 객체 생성 및 ID 할당
+	//최초 요청 여부 판단? 
+	//클라이언트의 브라우저에 흔적을 남긴 쿠키ID 존재여부로..
+	String sid = session.getId();
+	System.out.println("이 요청에 대해 생성된 세션ID : "+sid);
 	
-	<!-- Search Begin -->
-	<%@ include file="/inc/search.jsp" %>
-	<!-- Search End -->
-
-<!-- Js Plugins -->
-<%@ include file="/inc/footer_link.jsp" %>
-<script type="text/javascript">
-/* function delCart(){
-	//(서버의 세션에 들어있는 list에서)장바구니 삭제 요청
-	if(confirm("선택한 상품을 장바구니에서 삭제하시겠습니까?")){
-		location.href="/payment/delcart.jsp";
+	//장바구니 목록을 표현하기 위한 순서있는 컬렉션인 리스트를 준비하자
+	List<Cart> cartList = new ArrayList<Cart>();
+	
+	//List를 세션에 담지 않으면, service() 메서드의 지역변수이므로, 요청시마다
+	//생성되어 소멸되기를 반복한다..따라서 생명을 유지할수 있는 보다 전역적인 
+	//영역에  List 를 보관해놓자...현재로서는 세션이 가장 적합.. 
+	//application : 이 객체에 담으면 톰켓이 꺼질때까지 사용가능..
+	//session : 세션이 끊길때(브라우저 닫거나 일정시간 요청이 없거나)
+	
+	//이미  cartList가 세션이 담겨져 있을때는 덮어쓰기 말기!!
+	if(session.getAttribute("cartList")==null){ //전혀없을때만 담는다..
+		session.setAttribute("cartList", cartList);
 	}
-} */
-</script>
-</body>
+	
+	//원래는 로그인 한 유저를 대상으로 하므로,  session.getAttribute()
+	//얻어와야 한다..( 추후 진행)
+	//누가??
+	Member member =(Member)session.getAttribute("member");
+	
+	//무엇을? 
+	String product_idx=request.getParameter("product_idx");
+	
+	SqlSession sqlSession  = mybatisConfig.getSqlSession();
+	productDAO.setSqlSession(sqlSession); // injection
+	
+	Product product=productDAO.select(Integer.parseInt(product_idx));
+		
+	//몇개나? 1개
+	Cart cart=new Cart();
+	cart.setMember(member); //누가
+	cart.setProduct(product);
+	cart.setEa(1); //목록을 통해 담을때는 1개를 디폴트로 담는다
+	
+	//한건의 장바구니 객체를 List 에 담자!!
+	List sessionCartList =  (List)session.getAttribute("cartList");
+	
+	sessionCartList.add(cart);
+	System.out.println("현재 장바구니에 "+sessionCartList.size()+"건이 담겼어요");
+	
+	out.print("장바구니에 상품을 담았습니다");
+%>
 
-</html>
+
+
+
+
+
 
 
 
