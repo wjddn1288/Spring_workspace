@@ -102,6 +102,29 @@
 		    <version>4.3.30.RELEASE</version>
 		</dependency>
 
+		<!-- 웹소켓 -->		
+		<dependency>
+		    <groupId>javax.websocket</groupId>
+		    <artifactId>javax.websocket-api</artifactId>
+		    <version>1.1</version>
+		    <scope>provided</scope>
+		</dependency>
+		
+		<!-- 스프링 웹소켓 -->		
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-websocket</artifactId>
+		    <version>4.3.30.RELEASE</version>
+		</dependency>
+		
+		<!-- 스프링 소셜 구글인증 -->
+		<!-- https://mvnrepository.com/artifact/org.springframework.social/spring-social-google -->
+		<dependency>
+		    <groupId>org.springframework.social</groupId>
+		    <artifactId>spring-social-google</artifactId>
+		    <version>1.0.0.RELEASE</version>
+		</dependency>
+
 		<!-- AspectJ -->
 		<dependency>
 			<groupId>org.aspectj</groupId>

@@ -1,4 +1,3 @@
-<%@page import="java.util.List"%>
 <%@ page contentType="text/html;charset=UTF-8"%>
 <!DOCTYPE html>
 <html lang="zxx">
@@ -37,7 +36,13 @@
 					    <div class="form-group">
 						      <input type="text" class="form-control" placeholder="Enter pass" name="pass">
 					    </div>	
-					    <button type="button" class="btn btn-success" id="bt_login">로그인</button>
+					    <button type="button" class="btn btn-success" id="bt_google">Google로그인</button>
+					    <button type="button" class="btn btn-success" id="bt_googleauth">Google인증</button>
+					    
+					    <button type="button" class="btn btn-success" id="bt_naver">Naver로그인</button>
+					    <button type="button" class="btn btn-success" id="bt_kakao">Kakao로그인</button>
+					    
+					    <button type="button" class="btn btn-success" id="bt_login">Login</button>
 					    <button type="button" class="btn btn-success" id="bt_regist">신규가입</button>
 					  </form>
     			</div>
@@ -69,6 +74,23 @@ function regist(){
 }
 
 $(function(){
+	$("#bt_googleauth").click(function(){
+		location.href="<%=request.getAttribute("url")%>";
+	});
+	
+	$("#bt_google").click(function(){
+		location.href="/member/authform/google";
+		
+		/* $.ajax({  //비동기 로 바꾸기 나중엔
+			url:"/member/authform/google",
+			type:"GET",
+			success:function(result, status, hr){
+				console.log(result.msg);	
+				location.href=result.msg; //인증화면 주소를 요청
+			}
+		}); */
+		
+	});
 	
 	$("#bt_login").click(function(){
 		$("#form1").attr({

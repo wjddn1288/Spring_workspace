@@ -38,7 +38,7 @@
                     <div class="header__right">
                         <div class="header__right__auth">
 
-                            <a href="/member/loginform">logout</a>
+                            <a href="/member/loginform">login</a>
                             <a href="/member/joinform">Register</a>
 
                         </div>

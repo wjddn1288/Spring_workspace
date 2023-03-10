@@ -42,6 +42,7 @@
 		JNDI java name directory interface , 외부 자원에 이름을 붙여 놓고 그 이름을 통해 자원에 접근하는 기술!! 이라 한다. -->
   	<!--  <Resource auth="Container" driverClassName="oracle.jdbc.driver.OracleDriver" maxActive="20" maxIdle="10" maxWait="3000" name="jdbc/oracle" password="1234" type="javax.sql.DataSource" url="jdbc:oracle:thin:@localhost:1521:XE" username="jsp"/>-->
   
+  	<Resource auth="Container" driverClassName="oracle.jdbc.driver.OracleDriver" maxActive="20" maxIdle="10" maxWait="3000" name="jdbc/oracle" password="1234" type="javax.sql.DataSource" url="jdbc:oracle:thin:@localhost:1521:XE" username="jsp"/>
     <Resource auth="Container" driverClassName="com.mysql.jdbc.Driver" maxActive="20" maxIdle="10" maxWait="3000" name="jdbc/mysql" password="1234" type="javax.sql.DataSource" url="jdbc:mysql://localhost:3306/jspshop?characterEncoding=utf8" username="root"/>
   
   </GlobalNamingResources>
@@ -159,7 +160,7 @@
              Note: The pattern used is equivalent to using pattern="common" -->
         <Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs" pattern="%h %l %u %t &quot;%r&quot; %s %b" prefix="localhost_access_log" suffix=".txt"/>
 
-      <Context docBase="C:\spring_workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\SpringMVC1" path="" reloadable="true" source="org.eclipse.jst.jee.server:SpringMVC1"/></Host>
+      <Context docBase="C:\spring_workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\SpringShop" path="" reloadable="true" source="org.eclipse.jst.jee.server:SpringShop"/></Host>
     </Engine>
   </Service>
 </Server>

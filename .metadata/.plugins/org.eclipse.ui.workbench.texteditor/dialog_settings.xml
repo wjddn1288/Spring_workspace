@@ -7,4 +7,34 @@
 		<item key="DIALOG_HEIGHT" value="639"/>
 		<item key="DIALOG_FONT_NAME" value="1|맑은 고딕|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|맑은 고딕"/>
 	</section>
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
+		<item key="selection" value=""/>
+		<item key="wrap" value="true"/>
+		<item key="casesensitive" value="false"/>
+		<item key="wholeword" value="false"/>
+		<item key="incremental" value="false"/>
+		<item key="isRegEx" value="false"/>
+		<list key="findhistory">
+			<item value="`"/>
+			<item value=" file=&quot;/inc"/>
+			<item value="add to"/>
+			<item value="class=&quot;img-size-50 mr-3 img-circle&quot;&gt;"/>
+			<item value="insert into notice(title, writer, content)"/>
+			<item value="values( ?, ?, #{content)"/>
+			<item value="reBoardController"/>
+			<item value=" org-springframework-version"/>
+			<item value="eud"/>
+		</list>
+		<list key="replacehistory">
+			<item value=""/>
+			<item value=" file=&quot;../inc"/>
+		</list>
+	</section>
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
+		<item key="DIALOG_X_ORIGIN" value="527"/>
+		<item key="DIALOG_Y_ORIGIN" value="290"/>
+		<item key="DIALOG_WIDTH" value="288"/>
+		<item key="DIALOG_HEIGHT" value="391"/>
+		<item key="DIALOG_FONT_NAME" value="1|맑은 고딕|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|맑은 고딕"/>
+	</section>
 </section>

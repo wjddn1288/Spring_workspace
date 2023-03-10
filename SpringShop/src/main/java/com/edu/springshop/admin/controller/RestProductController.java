@@ -27,64 +27,58 @@ import com.edu.springshop.util.Message;
 public class RestProductController {
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
-	// 서비스의 존재가 없다면, 컨트롤러계층과 모델 계층의 구분이 모호해진다..
-	// 추후 모델을 완전히 재사용을 위해 분리시키려할때 분리가 불가능하다.. 
+	//서비스의 존재가 없다면, 컨트롤러계층과 모델 계층의 구분이 모호해진다..
+	//추후 모델을 완전히 재사용을 위해 분리시키려할때 분리가 불가능하다..
 	@Autowired
 	private ProductService productService;
+	
 	
 	//상품 등록 요청 처리
 	@RequestMapping(value="/product", method=RequestMethod.POST)
 	public ResponseEntity<Message> regist(Product product, HttpServletRequest request) {
+		logger.info("Product is "+product);
 		
 		//웹환경과 관련된 코드 이므로, 컨트롤러의 책임이다!!
-		//왜 ? 모델은 중립적이니깐... 관심도 없다
-		ServletContext application = request.getSession().getServletContext();
+		//왜?? 모델은 중립적이니깐...관심도없다
+		ServletContext application=request.getSession().getServletContext();
 		String path=application.getRealPath("/resources/data/");
-		logger.info("저장될 실제 경로는"+path);
+		logger.info("저장될 실제 경로는 "+path);
 		
-		//3단계 : 일시키기
+		//3단계 
 		productService.regist(product, path);
 		
-		Message message=new Message();
+		Message message = new Message();
 		message.setMsg("상품등록 성공");
 		
-		ResponseEntity entity= new ResponseEntity<Message>(message,HttpStatus.OK);
-		return entity;
-	}
-		
-	//예외처리
-	@ExceptionHandler(ProductException.class)
-	public ResponseEntity<Message> handle(ProductException e){
-		
-		Message message= new Message();
-		message.setMsg(e.getMessage());
-		
-		ResponseEntity entity= new ResponseEntity<Message>(message, HttpStatus.INTERNAL_SERVER_ERROR);
-		return entity;
-	}
-	
-	//예외처리
-	@ExceptionHandler(UploadException.class)
-	public ResponseEntity<Message> handle(UploadException e){
-		
-		Message message= new Message();
-		message.setMsg(e.getMessage());
-		
-		ResponseEntity entity= new ResponseEntity<Message>(message, HttpStatus.INTERNAL_SERVER_ERROR);
-		return entity;
-	}
-	
-	//예외처리
-	@ExceptionHandler(PimgException.class)
-	public ResponseEntity<Message> handle(PimgException e){
-		
-		Message message= new Message();
-		message.setMsg(e.getMessage());
-		
-		ResponseEntity entity= new ResponseEntity<Message>(message, HttpStatus.INTERNAL_SERVER_ERROR);
+		ResponseEntity entity = new ResponseEntity<Message>(message, HttpStatus.OK);
 		return entity;
 	}
 
+	@ExceptionHandler(ProductException.class)
+	public ResponseEntity<Message> handle(ProductException e){
+		Message message = new Message();
+		message.setMsg(e.getMessage());
+		
+		ResponseEntity entity = new ResponseEntity<Message>(message, HttpStatus.INTERNAL_SERVER_ERROR);
+		return entity;
+	}
+	@ExceptionHandler(UploadException.class)
+	public ResponseEntity<Message> handle(UploadException e){
+		Message message = new Message();
+		message.setMsg(e.getMessage());
+		
+		ResponseEntity entity = new ResponseEntity<Message>(message, HttpStatus.INTERNAL_SERVER_ERROR);
+		return entity;
+	}
+	@ExceptionHandler(PimgException.class)
+	public ResponseEntity<Message> handle(PimgException e){
+		Message message = new Message();
+		message.setMsg(e.getMessage());
+		
+		ResponseEntity entity = new ResponseEntity<Message>(message, HttpStatus.INTERNAL_SERVER_ERROR);
+		return entity;
+	}
+	
 }
 
 
