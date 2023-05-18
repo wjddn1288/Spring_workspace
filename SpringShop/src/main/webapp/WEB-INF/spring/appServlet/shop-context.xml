@@ -96,7 +96,7 @@
 		<beans:property name="client_id" value="977351885539-csofnf90u1lvlt2lge2rlaubr02cqocs.apps.googleusercontent.com"/>
 		
 		<!-- Google Cloud Platform에서 발급받은 client Secret -->
-		<beans:property name="Client_secret" value="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"/>
+		<beans:property name="Client_secret" value=""/>
 		
 		<!-- Resource Owner 가 인증할때, 콜백받을 우리 웹사이트의 URI -->
  		<beans:property name="redirect_uri" value="http://localhost:7777/sns/google/callback"/>
@@ -126,7 +126,7 @@
 		<beans:property name="endpoint"  value="https://kauth.kakao.com/oauth/authorize"/>
 			
 		<!-- 카카오에서 발급받은 client ID -->
-		<beans:property name="client_id" value="eca23f77c9d34abdbff825f1eb8f23ed"/>
+		<beans:property name="client_id" value="eca23f77c9d34abdbff82"/>
 		
 		<!-- Resource Owner 가 인증할때, 콜백받을 우리 웹사이트의 URI -->
  		<beans:property name="redirect_uri"  value="http://localhost:7777/sns/kakao/callback"/>
