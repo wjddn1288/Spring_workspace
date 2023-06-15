@@ -54,6 +54,11 @@ public class RestProductController {
 		return entity;
 	}
 
+	@GetMapping("/product")
+	public List getList() {
+		return productService.selectAll();
+	}
+
 	@ExceptionHandler(ProductException.class)
 	public ResponseEntity<Message> handle(ProductException e){
 		Message message = new Message();
